@@ -1,0 +1,79 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.6.21"
+    id("org.jetbrains.kotlin.kapt") version "1.6.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.6.2"
+}
+
+version = "0.1"
+group = "com.adi3000.cloud.bridge"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    kapt("io.micronaut:micronaut-http-validation")
+    kapt("io.micronaut.microstream:micronaut-microstream-annotations")
+    kapt("io.micronaut.openapi:micronaut-openapi")
+    kapt("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+    implementation("io.micronaut.microstream:micronaut-microstream")
+    implementation("io.micronaut.microstream:micronaut-microstream-annotations")
+    implementation("io.micronaut.serde:micronaut-serde-jsonp")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    developmentOnly("io.micronaut.microstream:micronaut-microstream-rest")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("org.aarboard.nextcloud:nextcloud-api:12.0.2")
+    implementation("com.slack.api:slack-api-client:1.26.1")
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+}
+
+
+application {
+    mainClass.set("com.adi3000.cloud.bridge.ApplicationKt")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+}
+
+tasks {
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+}
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.adi3000.cloud.*")
+    }
+}
+
+
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-core"))
+            .using(module("io.micronaut.serde:micronaut-serde-jsonp:1.3.2"))
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+            .using(module("jakarta.json.bind:jakarta.json.bind-api:2.0.0"))
+    }
+}
+

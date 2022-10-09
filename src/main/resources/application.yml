@@ -1,0 +1,21 @@
+micronaut:
+  application:
+    name: cloud-bridge
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+netty:
+  default:
+    allocator:
+      max-order: 3
+bridge:
+  users:
+    file: ${BRIDGE_USERS_FILE:/etc/adi3000/bridge/users.yml}
+  mapping:
+    slack: ${BRIDGE_SLACK_FILE:/etc/adi3000/bridge/slack.yml}
+    nextcloud: ${BRIDGE_NEXTCLOUD_FILE:/etc/adi3000/bridge/nextcloud.yml}

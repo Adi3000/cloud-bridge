@@ -1,0 +1,6 @@
+users:
+- user: dummy
+  login: dummy
+  password: test
+folder: bridge
+server: "http://localhost/nextcloud"

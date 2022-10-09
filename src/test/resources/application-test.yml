@@ -1,0 +1,6 @@
+bridge:
+  users:
+    file: "classpath:users.yml"
+  mapping:
+    slack: "classpath:slack.yml"
+    nextcloud: "classpath:nextcloud.yml"

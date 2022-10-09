@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.adi3000.cloud.bridge
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, gradle, http-client, junit, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, microstream, microstream-rest, netty-server, openapi, readme, serialization-jsonp, shade, swagger-ui, yaml]

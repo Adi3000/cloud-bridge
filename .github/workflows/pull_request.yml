@@ -1,0 +1,15 @@
+on: pull_request
+name: Pull Request
+jobs:
+  validate-tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+    - name: Run your tests
+      run: make tests
+    - name: Validate Tests
+      uses: quality-of-tests/has-useful-tests-action@master
+      with:
+        run-tests: make tests
